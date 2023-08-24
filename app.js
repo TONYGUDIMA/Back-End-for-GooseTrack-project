@@ -4,6 +4,8 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
+const usersRouter = require("./routes/users/usersRouter");
+
 const app = express();
 dotenv.config({ path: "./.env" });
 const formatsLogger =
@@ -25,6 +27,7 @@ mongoose
     process.exit(1);
   });
 // ROUTERS ===================================================================
+app.use("/users", usersRouter);
 // ===========================================================================
 app.use(logger(formatsLogger));
 app.use(cors());
