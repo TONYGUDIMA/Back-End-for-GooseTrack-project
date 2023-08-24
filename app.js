@@ -4,11 +4,8 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
-const contactsRouter = require("./routes/api/contactsRouter");
-const usersRouter = require("./routes/users/usersRouter");
-
 const app = express();
-dotenv.config({ path: "./dev.env" });
+dotenv.config({ path: "./.env" });
 const formatsLogger =
   app.get("env") === "development"
     ? "dev"
@@ -28,8 +25,6 @@ mongoose
     process.exit(1);
   });
 // ROUTERS ===================================================================
-app.use("/api/contacts", contactsRouter);
-app.use("/users", usersRouter);
 // ===========================================================================
 app.use(logger(formatsLogger));
 app.use(cors());
