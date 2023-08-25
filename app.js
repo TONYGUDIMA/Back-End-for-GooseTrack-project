@@ -1,13 +1,15 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-const dotenv = require("dotenv");
+// const dotenv = require("dotenv");
+require('dotenv').config();
 const mongoose = require("mongoose");
 
-const usersRouter = require("./routes/users/usersRouter");
+const usersRouter = require("./routes/users");
+const authRouter = require("./routes/auth");
 
 const app = express();
-dotenv.config({ path: "./.env" });
+
 const formatsLogger =
   app.get("env") === "development"
     ? "dev"
@@ -26,18 +28,26 @@ mongoose
     console.log(err);
     process.exit(1);
   });
+
 // ROUTERS ===================================================================
-app.use("/users", usersRouter);
+app.use("/auth", authRouter);
+app.use('/user', usersRouter);
+
 // ===========================================================================
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.static("public"));
-app.use((req, res) => {
+
+app.use('*', (req, res) => {
   res.status(404).json({ message: "Not found" });
 });
 
-app.use((err, req, res, next) => {
-  res.status(500).json({ message: err.message });
+
+app.use((error, req, res, next) => {
+  const message = error.message;
+   res.status(error.status || 500).json({ 
+    message,
+    });
 });
 
 module.exports = app;
