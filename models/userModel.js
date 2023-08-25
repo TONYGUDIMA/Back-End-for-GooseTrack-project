@@ -1,7 +1,13 @@
 const { Schema, model } = require("mongoose");
+const handleMongooseError = require("../helpers/handleMongooseError")
 const bcrypt = require("bcrypt");
+
 const userSchema = new Schema(
   {
+      name: {
+        type: String,
+        required:  [true, 'Name is required']
+    },
     email: {
       type: String,
       required: [true, "Email is required"],
@@ -11,10 +17,17 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required"],
     },
-    subscription: {
+      phone: {
       type: String,
-      enum: ["starter", "pro", "business"],
-      default: "starter",
+      default: ''
+    },
+    birthday: {
+      type: Date,
+      default: ''
+    },
+    skype: {
+      type: String,
+      default: ''
     },
     token: {
       type: String,
@@ -28,23 +41,7 @@ const userSchema = new Schema(
     versionKey: false,
   }
 );
-
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(
-    this.password,
-    salt
-  );
-
-  next();
-});
-
-userSchema.methods.checkPassword = (
-  candidate,
-  hash
-) => bcrypt.compare(candidate, hash);
+userSchema.post("save", handleMongooseError);
 
 const User = model("User", userSchema);
 

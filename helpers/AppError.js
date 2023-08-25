@@ -5,3 +5,4 @@ const AppError = (status, message) => {
 };
 
 module.exports = AppError;
+
