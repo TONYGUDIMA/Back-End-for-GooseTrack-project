@@ -1,12 +1,12 @@
 const { Schema, model } = require("mongoose");
-const handleMongooseError = require("../helpers/handleMongooseError")
+const handleMongooseError = require("../helpers/handleMongooseError");
 const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
   {
-      name: {
-        type: String,
-        required:  [true, 'Name is required']
+    name: {
+      type: String,
+      required: [true, "Name is required"],
     },
     email: {
       type: String,
@@ -17,17 +17,17 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required"],
     },
-      phone: {
+    phone: {
       type: String,
-      default: ''
+      default: "",
     },
     birthday: {
       type: Date,
-      default: ''
+      default: "",
     },
     skype: {
       type: String,
-      default: ''
+      default: "",
     },
     token: {
       type: String,
