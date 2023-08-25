@@ -3,7 +3,7 @@ const AppError = require("../helpers/AppError");
 
 exports.signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "10d",
+    expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
 exports.checkToken = (token) => {

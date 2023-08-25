@@ -20,9 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-  .connect(
-    "mongodb+srv://gudimaanton:jpGKWPRf0CTRSStg@cluster0.1gv65ax.mongodb.net/UltimateProjectDB"
-  )
+  .connect(process.env.MONGO_URL)
   .then((con) => {
     console.log("Mongo DB succesfully connected");
   })
