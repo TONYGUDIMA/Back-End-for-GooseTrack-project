@@ -10,6 +10,9 @@ const authRouter = require("./routes/auth");
 
 const app = express();
 
+const MONGO_URL =
+  "mongodb+srv://gudimaanton:jpGKWPRf0CTRSStg@cluster0.1gv65ax.mongodb.net/UltimateProjectDB";
+
 const formatsLogger =
   app.get("env") === "development"
     ? "dev"
@@ -20,7 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(MONGO_URL)
   .then((con) => {
     console.log("Mongo DB succesfully connected");
   })

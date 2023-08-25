@@ -2,7 +2,7 @@ const AppError = require("../helpers/AppError");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
-const {JWT_SECRET} = process.env;
+const JWT_SECRET = "jwt-secret-phrase";
 
 const authMiddleware = async (req, res, next) => {
     const { authorization = "" } = req.headers;
