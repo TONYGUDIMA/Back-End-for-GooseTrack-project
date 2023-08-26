@@ -11,7 +11,7 @@
   },
   "consumes": ["application/json",  "multipart/form-data"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:3000"  }, {"url": "https://goose-back-end.onrender.com"}],
+  "servers": [ {"url": "https://goose-back-end.onrender.com"}, { "url": "http://localhost:3000"  }],
   "tags": [
     {
       "name": "Auth",
@@ -315,6 +315,146 @@
         "responses": {
           "204": {
             "description": "ОК-Review deleted"
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+    }
+    },
+     "/tasks":{ 
+        "get": {
+        "tags": ["Tasks"],
+        "summary": " Get all tasks in product",
+        "parameters": [
+          {
+            "name": "years",
+            "in": "query",
+            "required": true,
+            "type": "date",
+            "example": "2023"
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "required": true,
+            "type": "date",
+            "example": "08"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Information found",
+             "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllTasksResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+              "500": {
+            "description": "Server error"
+          }
+        }
+      },
+
+     "post": {
+        "tags": ["Tasks"],
+        "summary": "Create a new task",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Task's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ОК - Task was successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTaskResponse"
+                }
+              }
+            }
+          },
+             "400": {
+            "description": "Bad request (invalid request body) / No token provided",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Bad request(invalid request body)"
+          }
+        }
+      }
+    },
+    "/tasks/{id}": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "Get task by user's id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "example": "64983b139dd09fca9aaa6da4"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "ОК",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TasksByIdUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Tasks"],
+        "summary": "Delete task by user's id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "user's id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "204": {
+            "description": "ОК-Task deleted"
           },
           "401": {
             "description": "Not authorized"
@@ -734,6 +874,50 @@
             "avatarURL": "http://www.gravatar.com/2a06849295a6965ddd313b186672c523.json"
           }
         } 
+         },
+         "AllTasksResponse":{
+              "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Task id"
+            },
+            "title": {
+              "type": "string",
+              "description": "Task title"
+            },
+            "start": {
+              "type": "string",
+              "description": "Task start"
+            },
+             "end": {
+              "type": "string",
+              "description": "Task end"
+            }, 
+             "priority": {
+              "type": "string",
+              "description": "User's task priority must be one of [low, medium, high]"
+            },
+            "date": {
+              "type": "Date",
+              "description": "User's task date must be in YYYY-MM-DD format"
+            },
+            "owner": {
+              "type": "object",
+              "description": "Task owner id"  
+            }
+          }},
+           "example": {
+            "_id": "64983b139dd09fca9aaa6da4",
+            "title": "Learn how to use the forms",
+            "start": "08-00",
+            "end": "12-00",
+            "priority": "low",
+            "date": "2023-06-30T00:00:00.000Z",
+            "owner": "64983b139dd09fca9aaa6da4"
+        }
          }
        
     },
