@@ -4,7 +4,8 @@ const cors = require("cors");
 // const dotenv = require("dotenv");
 require("dotenv").config();
 const mongoose = require("mongoose");
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
 
@@ -19,6 +20,7 @@ const formatsLogger =
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 mongoose
   .connect(process.env.MONGO_URL)

@@ -1,0 +1,748 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "2.0.2",
+    "title": "Goose Track",
+    "description": "Showing off swagger-ui-express",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json",  "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://localhost:3000"  }, {"url": "https://goose-back-end.onrender.com"}],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "User",
+      "description": "User endpoints"
+    },
+    {
+        "name": "Reviews",
+        "description": "Reviews endpoints"
+    },
+    {
+        "name": "Tasks",
+        "description": "Tasks endpoints"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+     "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "parameters": [],
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+           "403": {
+            "description": "Email doesn't exist / Password is wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+     "/user/logout": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Logout",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "Logout success",
+            "content": {}
+          },
+          "400": {
+            "description": "No token provided",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          },
+          "404": {
+            "description": "Invalid user / Invalid session",
+            "content": {}
+          }
+        }
+      }
+    },
+     "/user/current": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get information about the current user",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Information found",
+             "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          },
+          "404": {
+            "description": "Invalid user / Invalid session",
+            "content": {}
+          }
+        }
+      }
+    },
+      "/user/info": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update information about the current user",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+         "requestBody": {
+          "description": "Update user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Information update",
+             "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Invalid user / Invalid session",
+            "content": {}
+          },
+            "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/reviews":{ 
+        "get": {
+        "tags": ["Reviews"],
+        "summary": " Get all reviews about product",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Information found",
+             "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllReviewsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+              "500": {
+            "description": "Server error"
+          }
+        }
+      },
+
+     "post": {
+        "tags": ["Reviews"],
+        "summary": "Create a new review",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Review's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReviewRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ОК - Review was successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateReviewResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Bad request(invalid request body)"
+          },
+          "409": {
+            "description": "User already has a review"
+          }
+        }
+      }
+    },
+    "/reviews/{id}": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get review by user's id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "example": "64983b139dd09fca9aaa6da4"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "ОК",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewsByIdUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Reviews"],
+        "summary": "Delete review by user's id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "user's id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "204": {
+            "description": "ОК-Review deleted"
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+    }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+         "type": "object",
+        "required": ["email", "password", "name"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "minLength": 3,
+            "maxLength": 254
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123",
+            "minLength": 8,
+            "maxLength": 100
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "minLength": 2,
+            "maxLength": 100,
+            "example": "Adam"
+          }
+        }
+      },
+      "RegistrationResponse": {
+         "type": "object",
+        "properties": {
+           "token": {
+            "type": "string",
+            "description": "User's token"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "User's id"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar path"
+              }}}},
+        "example":{
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OTgzYjEzOWRkMDlmY2E5YWFhNmRhNCIsImlhdCI6MTY4NzY5ODE5NSwiZXhwIjoxNjg3Njk4Mzc1fQ.P3ZWu3PzRpMyuT6ngche4ojbYizBvnOOnTSqniABkhQ",
+          "user": {
+            "_id": "64983b139dd09fca9aaa6da4",
+            "name": "Adam",
+            "email": "adam@gmail.com",
+            "avatarURL": "http://www.gravatar.com/2a06849295a6965ddd313b186672c523.json"
+          }
+        }
+      },
+      "LoginRequest":{
+         "type": "object",
+         "required": ["email", "password"],
+            "properties":{
+            "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "minLength": 3,
+            "maxLength": 254
+          }  ,
+           "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "Qwerty123.",
+            "minLength": 8,
+            "maxLength": 100  
+          }
+        }
+      },
+      "LoginResponse":{
+          "type": "object",
+        "required": ["email", "password"],
+        "properties": { 
+             "token": {
+            "type": "string",
+            "description": "User's token"
+          },
+          "user":{
+            "type": "object",
+            "properties":{
+               "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "minLength": 3,
+            "maxLength": 254
+          }  ,
+           "_id": {
+            "type": "string",
+            "description": "User's id"
+          },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar"
+              },
+              "phone":{
+                 "type": "string",
+                "description": "User's phone"
+              },
+              "skype":{
+                 "type": "string",
+                "description": "User's skype"
+              },
+              "name":{
+                "type": "string",
+                "description": "User's name "
+            },
+              "birthday":{
+                "type": "string",
+                "description": "User's day of birthday"
+                }
+               
+            }
+          }
+        }
+      },
+      "CurrentResponse":{
+         "type": "object",
+            "properties":{
+               "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "minLength": 3,
+            "maxLength": 254
+          }  ,
+           "_id": {
+            "type": "string",
+            "description": "User's id"
+          },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar"
+              },
+              "phone":{
+                 "type": "string",
+                "description": "User's phone"
+              },
+              "skype":{
+                 "type": "string",
+                "description": "User's skype"
+              },
+              "name":{
+                "type": "string",
+                "description": "User's name "
+            },
+              "birthday":{
+                "type": "string",
+                "description": "User's day of birthday"
+                }
+               
+            }
+      },
+      "UpdateUserRequest":{
+         "type": "object",
+        "properties": { 
+            "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "minLength": 3,
+            "maxLength": 254
+          }  ,
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar"
+              },
+              "phone":{
+                 "type": "string",
+                "description": "User's phone"
+              },
+              "skype":{
+                 "type": "string",
+                "description": "User's skype"
+              },
+              "name":{
+                "type": "string",
+                "description": "User's name "
+            },
+              "birthday":{
+                "type": "string",
+                "description": "User's day of birthday"
+                }
+        }
+      },
+      "UpdateUserResponse":{
+         "type": "object",
+         "properties":{
+            "_id": {
+            "type": "string",
+            "description": "User's id"
+          },
+            "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "minLength": 3,
+            "maxLength": 254
+          }  ,
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar"
+              },
+              "phone":{
+                 "type": "string",
+                "description": "User's phone"
+              },
+              "skype":{
+                 "type": "string",
+                "description": "User's skype"
+              },
+              "name":{
+                "type": "string",
+                "description": "User's name "
+            },
+              "birthday":{
+                "type": "string",
+                "description": "User's day of birthday"
+                },
+                  "token": {
+            "type": "string",
+            "description": "User's token"
+          }
+        },
+         "example": {
+          "_id": "64983b139dd09fca9aaa6da4",
+          "name": "Adam",
+          "email": "adam@gmail.com",
+          "phone": "00 (000) 000 00 00",
+          "birthday": "1991-11-30T00:00:00.000Z",
+          "skype": "adamskype",
+          "avatarURL": "http://www.gravatar.com/2a06849295a6965ddd313b186672c523.json",
+          "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OTgzYjEzOWRkMDlmY2E5YWFhNmRhNCIsImlhdCI6MTY4ODMwMDUzNCwiZXhwIjoxNjg4MzA0MTM0fQ.Dd09QhieWWuLMcIQGOKkrTFIGpaziWU7Tig2JkAzzp0"
+        }
+      },
+      "AllReviewsResponse":{
+         "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Review id"
+            },
+            "rating": {
+              "type": "number",
+              "description": "Review rating"
+            },
+            "comment": {
+              "type": "string",
+              "description": "Review comment"
+            },
+            "owner": {
+              "type": "object",
+              "description": "Review owner",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Owner id"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Owner name"
+                },
+                "avatarURL": {
+                  "type": "string",
+                  "description": "Owner avatarURL"
+                }
+              }
+            }
+          }},
+           "example": {
+            "_id": "64983b139dd09fca9aaa6da4",
+            "rating": 2,
+            "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
+          "owner":{
+            "_id": "64983b139dd09fca9aaa6da4",
+            "name": "Adam",
+            "avatarURL": "http://www.gravatar.com/2a06849295a6965ddd313b186672c523.json"
+          }
+        
+          
+        }
+
+      },
+      "ReviewsByIdUserResponse":{
+        "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Review id"
+            },
+            "rating": {
+              "type": "number",
+              "description": "Review rating"
+            },
+            "comment": {
+              "type": "string",
+              "description": "Review comment"
+            },
+            "owner": {
+              "type": "object",
+              "description": "Review owner",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Owner id"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Owner name"
+                },
+                "avatarURL": {
+                  "type": "string",
+                  "description": "Owner avatarURL"
+                }
+              }
+            }
+          },
+    
+       "example": {
+            "_id": "64983b139dd09fca9aaa6da4",
+            "rating": 2,
+            "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
+          "owner":{
+            "_id": "64983b139dd09fca9aaa6da4",
+            "name": "Adam",
+            "avatarURL": "http://www.gravatar.com/2a06849295a6965ddd313b186672c523.json"
+          }
+        } 
+       },
+        "CreateReviewRequest":{
+          "type": "object",
+          "required":["rating", "comment"],
+           "properties": {
+          "rating": {
+            "type": "number",
+            "description": "Review rating",
+            "example": "3"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Review comment",
+            "example": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!"
+          }
+        } 
+        },
+         "CreateReviewResponse":{
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Review id"
+            },
+            "rating": {
+              "type": "number",
+              "description": "Review rating"
+            },
+            "comment": {
+              "type": "string",
+              "description": "Review comment"
+            },
+            "owner": {
+              "type": "object",
+              "description": "Review owner",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Owner id"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Owner name"
+                },
+                "avatarURL": {
+                  "type": "string",
+                  "description": "Owner avatarURL"
+                }
+              }
+            }
+          },
+           "example": {
+            "_id": "64983b139dd09fca9aaa6da4",
+            "rating": 2,
+            "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
+           "owner":{
+            "_id": "64983b139dd09fca9aaa6da4",
+            "name": "Adam",
+            "avatarURL": "http://www.gravatar.com/2a06849295a6965ddd313b186672c523.json"
+          }
+        } 
+         }
+       
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
