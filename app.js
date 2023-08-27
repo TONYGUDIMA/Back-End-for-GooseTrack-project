@@ -4,23 +4,20 @@ const cors = require("cors");
 // const dotenv = require("dotenv");
 require("dotenv").config();
 const mongoose = require("mongoose");
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
+const reviewRouter = require("./routes/reviews");
 
 const app = express();
 
-
-const formatsLogger =
-  app.get("env") === "development"
-    ? "dev"
-    : "short";
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -35,6 +32,7 @@ mongoose
 // ROUTERS ===================================================================
 app.use("/auth", authRouter);
 app.use("/user", usersRouter);
+app.use("/review", reviewRouter);
 
 // ===========================================================================
 app.use(logger(formatsLogger));
