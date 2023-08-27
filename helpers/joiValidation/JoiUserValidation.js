@@ -28,6 +28,7 @@ const userInfoValidation = Joi.object({
             phone: Joi.string().pattern(PHONE_REGEX),
             birthday: Joi.date().min("01-01-1930").max(new Date()),
             skype: Joi.string().min(3).max(20),
+            avatarUrl: Joi.string()
 });
 
 module.exports = {

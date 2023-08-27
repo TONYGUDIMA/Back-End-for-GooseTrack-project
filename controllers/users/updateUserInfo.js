@@ -3,6 +3,12 @@ const User = require("../../models/userModel");
 module.exports = async (req, res) => {
     const { _id } = req.user;
 
+    let avatarUrl;
+       if (req.file) {
+       avatarUrl  = req.file.path;
+      }
+    
+   
     const { name, email, phone, birthday, skype} = req.body;
    
      await User.findByIdAndUpdate(_id, {
@@ -10,7 +16,8 @@ module.exports = async (req, res) => {
         email,
         phone,
         birthday,
-        skype,
+         skype,
+        avatarUrl
       });
     
     res.status(201).json({
@@ -20,5 +27,6 @@ module.exports = async (req, res) => {
         phone,
         birthday,
         skype,
+        avatarUrl
     })
 }

@@ -5,21 +5,18 @@ const {
   currentUserInfo,
   updateUserInfo,
 } = require("../controllers");
-const authMiddleware = require("../middlewares/authMiddlewares");
+const {authMiddlewares, uploadAvatar} = require("../middlewares");
+
 const {
   userInfoValidation,
 } = require("../helpers/joiValidation/JoiUserValidation");
 
-router.use(authMiddleware);
+router.use(authMiddlewares);
 
 router.post("/logout", userLogout);
 
 router.get("/current", currentUserInfo);
 
-router.patch(
-  "/info",
-  userInfoValidation,
-  updateUserInfo
-);
+router.patch("/info", userInfoValidation, uploadAvatar.single("avatarUrl"),  updateUserInfo);
 
 module.exports = router;
