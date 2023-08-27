@@ -1,4 +1,6 @@
-const { Review } = require("../../models/review");
+const {
+  Review,
+} = require("../../models/reviewModel");
 
 module.exports = async (req, res) => {
   const result = await Review.create(req.body);

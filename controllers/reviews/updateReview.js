@@ -1,12 +1,20 @@
-const { Review } = require("../../models/review");
+const {
+  Review,
+} = require("../../models/reviewModel");
 
-const { AppError } = require("../../helpers/AppError");
+const {
+  AppError,
+} = require("../../helpers/AppError");
 
 module.exports = async (req, res) => {
   const { id } = req.params;
-  const result = await Review.findByIdAndUpdate(id, req.body, {
-    new: true,
-  });
+  const result = await Review.findByIdAndUpdate(
+    id,
+    req.body,
+    {
+      new: true,
+    }
+  );
 
   if (!result) {
     throw AppError(404, "Not found");
