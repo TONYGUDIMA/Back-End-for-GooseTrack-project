@@ -30,7 +30,7 @@ mongoose
 
 // ROUTERS ===================================================================
 app.use("/auth", authRouter);
-app.use("/user", usersRouter);
+app.use("/users", usersRouter);
 app.use("/review", reviewRouter);
 
 // ===========================================================================
