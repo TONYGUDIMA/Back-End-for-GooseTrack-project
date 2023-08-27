@@ -13,12 +13,13 @@ const updateReview = require("./reviews/updateReview");
 const removeReview = require("./reviews/removeReview");
 
 module.exports = {
+// Users
   userRegistration: ctrlWrapper(userRegistration),
   userLogin: ctrlWrapper(userLogin),
   userLogout: ctrlWrapper(userLogout),
   currentUserInfo: ctrlWrapper(currentUserInfo),
   updateUserInfo: ctrlWrapper(updateUserInfo),
-
+// Reviews
   getListReviews: ctrlWrapper(getListReviews),
   getReviewById: ctrlWrapper(getReviewById),
   addReview: ctrlWrapper(addReview),

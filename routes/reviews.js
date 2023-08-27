@@ -10,25 +10,24 @@ const {
   removeReview,
 } = require("../controllers");
 
-const authMiddleware = require("../middlewares/authMiddlewares");
+const { isValidId, authMiddlewares } = require("../middlewares");
+const { reviewsAddSchema, reviewsEditSchema } = require("../helpers/joiValidation/JoiReviewsValidation");
 
-const { validateBody, isValidId } = require("../middlewares");
-const { reviewsAddSchema, reviewsEditSchema } = require("../models/review");
+router.use(authMiddlewares);
 
-router.get("/", authMiddleware, getListReviews);
+router.get("/", getListReviews);
 
-router.get("/my-review/:id", authMiddleware, isValidId, getReviewById);
+router.get("/my-review/:id", isValidId, getReviewById);
 
-router.post("/", authMiddleware, validateBody(reviewsAddSchema), addReview);
+router.post("/", reviewsAddSchema, addReview);
 
 router.put(
   "/my-review/:id",
-  authMiddleware,
   isValidId,
-  validateBody(reviewsEditSchema),
+  reviewsEditSchema,
   updateReview
 );
 
-router.delete("/my-review/:id", authMiddleware, isValidId, removeReview);
+router.delete("/my-review/:id", isValidId, removeReview);
 
 module.exports = router;
