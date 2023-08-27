@@ -11,7 +11,10 @@ const {
 } = require("../controllers");
 
 const { isValidId, authMiddlewares } = require("../middlewares");
-const { reviewsAddSchema, reviewsEditSchema } = require("../helpers/joiValidation/JoiReviewsValidation");
+const {
+  reviewsAddSchema,
+  reviewsEditSchema,
+} = require("../helpers/joiValidation/JoiReviewsValidation");
 
 router.use(authMiddlewares);
 
@@ -21,12 +24,7 @@ router.get("/my-review/:id", isValidId, getReviewById);
 
 router.post("/", reviewsAddSchema, addReview);
 
-router.put(
-  "/my-review/:id",
-  isValidId,
-  reviewsEditSchema,
-  updateReview
-);
+router.put("/my-review/:id", isValidId, reviewsEditSchema, updateReview);
 
 router.delete("/my-review/:id", isValidId, removeReview);
 
