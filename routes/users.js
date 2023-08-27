@@ -17,6 +17,6 @@ router.post("/logout", userLogout);
 
 router.get("/current", currentUserInfo);
 
-router.patch("/info", userInfoValidation, uploadAvatar.single("avatarUrl"),  updateUserInfo);
+router.patch("/edit", userInfoValidation, uploadAvatar.single("avatarUrl"),  updateUserInfo);
 
 module.exports = router;
