@@ -9,16 +9,8 @@ const {
   userLoginValidation,
 } = require("../helpers/joiValidation/JoiUserValidation");
 
-router.post(
-  "/register",
-  userSignUpValidation,
-  userRegistration
-);
+router.post( "/register", userSignUpValidation, userRegistration );
 
-router.post(
-  "/login",
-  userLoginValidation,
-  userLogin
-);
+router.post( "/login", userLoginValidation, userLogin);
 
 module.exports = router;

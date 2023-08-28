@@ -16,9 +16,10 @@ const {
   reviewsEditSchema,
 } = require("../helpers/joiValidation/JoiReviewsValidation");
 
-router.use(authMiddlewares);
 
 router.get("/", getListReviews);
+
+router.use(authMiddlewares);
 
 router.get("/my-review/:id", isValidId, getReviewById);
 
