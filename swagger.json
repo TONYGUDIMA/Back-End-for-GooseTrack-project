@@ -108,7 +108,7 @@
         }
       }
     },
-     "/user/logout": {
+     "/users/logout": {
       "post": {
         "tags": ["User"],
         "summary": "Logout",
@@ -134,7 +134,7 @@
         }
       }
     },
-     "/user/current": {
+     "/users/current": {
       "get": {
         "tags": ["User"],
         "summary": "Get information about the current user",
@@ -162,7 +162,7 @@
         }
       }
     },
-      "/user/info": {
+      "/users/edit": {
       "patch": {
         "tags": ["User"],
         "summary": "Update information about the current user",
@@ -266,10 +266,10 @@
         }
       }
     },
-    "/reviews/{id}": {
+    "/reviews/my-review/{id}": {
       "get": {
         "tags": ["Reviews"],
-        "summary": "Get review by user's id",
+        "summary": "Get review by user id",
         "parameters": [
           {
             "name": "id",
@@ -299,9 +299,52 @@
           }
         }
       },
+        "put": {
+        "tags": ["Reviews"],
+        "summary": "Change and update review by user id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "user's id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+          "requestBody": {
+          "description": "Review's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateReviewRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "ОК-Review updated",
+              "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateReviewResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+    },
       "delete": {
         "tags": ["Reviews"],
-        "summary": "Delete review by user's id",
+        "summary": "Delete review by user id",
         "parameters": [
           {
             "name": "id",
@@ -407,9 +450,9 @@
       }
     },
     "/tasks/{id}": {
-      "get": {
+      "patch": {
         "tags": ["Tasks"],
-        "summary": "Get task by user's id",
+        "summary": "Change task by user id",
         "parameters": [
           {
             "name": "id",
@@ -420,13 +463,24 @@
           }
         ],
         "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Task's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTaskRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "ОК",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TasksByIdUserResponse"
+                  "$ref": "#/components/schemas/UpdateTaskResponse"
                 }
               }
             }
@@ -875,6 +929,36 @@
           }
         } 
          },
+         "UpdateReviewRequest":{
+           "type": "object",
+          "required": ["rating", "comment"],
+          "properties": {
+         
+            "rating": {
+              "type": "number",
+              "description": "Review rating",
+               "example": "4"
+            },
+            "comment": {
+              "type": "string",
+              "description": "Review comment",
+              "example": "New review"
+            }
+          }
+         },
+          "UpdateReviewResponse":{
+           "type": "object",
+          "properties": {
+            "rating": {
+              "type": "number",
+              "description": "Review rating"
+            },
+            "comment": {
+              "type": "string",
+              "description": "Review comment"
+            }
+          }
+         },
          "AllTasksResponse":{
               "type": "array",
         "items": {
@@ -898,11 +982,11 @@
             }, 
              "priority": {
               "type": "string",
-              "description": "User's task priority must be one of [low, medium, high]"
+              "description": "Priority  one of [low, medium, high]"
             },
             "date": {
               "type": "Date",
-              "description": "User's task date must be in YYYY-MM-DD format"
+              "description": "Date must be in YYYY-MM-DD format"
             },
             "owner": {
               "type": "object",
@@ -917,6 +1001,140 @@
             "priority": "low",
             "date": "2023-06-30T00:00:00.000Z",
             "owner": "64983b139dd09fca9aaa6da4"
+        }
+         },
+         "CreateTaskRequest":{
+          
+          "type": "object",
+          "required":["title", "start", "end", "priority", "date", "category"],
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Task title"
+            },
+            "start": {
+              "type": "string",
+              "description": "Task start"
+            },
+             "end": {
+              "type": "string",
+              "description": "Task end"
+            }, 
+             "priority": {
+              "type": "string",
+              "description": "Priority  one of [low, medium, high]"
+            },
+            "date": {
+              "type": "Date",
+              "description": "Date must be in YYYY-MM-DD format"
+            }
+          },
+           "example": {
+            "title": "Learn how to use the forms",
+            "start": "08-00",
+            "end": "12-00",
+            "priority": "low",
+            "date": "2023-08-30T00:00:00.000Z"
+        }
+         },
+          "CreateTaskResponse":{
+          
+          "type": "object",
+          "description": "User new task",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Task title"
+            },
+            "start": {
+              "type": "string",
+              "description": "Task start"
+            },
+             "end": {
+              "type": "string",
+              "description": "Task end"
+            }, 
+             "priority": {
+              "type": "string",
+              "description": "Priority  one of [low, medium, high]"
+            },
+            "date": {
+              "type": "Date",
+              "description": "Date must be in YYYY-MM-DD format"
+            }
+          },
+           "example": {
+            "title": "Learn how to use the forms",
+            "start": "08-00",
+            "end": "11-00",
+            "priority": "low",
+            "date": "2023-08-30T00:00:00.000Z"
+        }
+         },
+         "UpdateTaskRequest":{
+          "type": "object",
+          "required":["title", "start", "end", "priority", "date", "category"],
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Task title"
+            },
+            "start": {
+              "type": "string",
+              "description": "Task start"
+            },
+             "end": {
+              "type": "string",
+              "description": "Task end"
+            }, 
+             "priority": {
+              "type": "string",
+              "description": "Priority  one of [low, medium, high]"
+            },
+            "date": {
+              "type": "Date",
+              "description": "Date must be in YYYY-MM-DD format"
+            }
+          },
+           "example": {
+            "title": "Learn how to use the forms",
+            "start": "08-00",
+            "end": "12-00",
+            "priority": "low",
+            "date": "2023-08-30T00:00:00.000Z"
+        }
+         },
+         "UpdateTaskResponse":{
+          "type": "object",
+          "description": "Update user's task",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Task title"
+            },
+            "start": {
+              "type": "string",
+              "description": "Task start"
+            },
+             "end": {
+              "type": "string",
+              "description": "Task end"
+            }, 
+             "priority": {
+              "type": "string",
+              "description": "Priority one of [low, medium, high]"
+            },
+            "date": {
+              "type": "Date",
+              "description": "Date must be in YYYY-MM-DD format"
+            }
+          },
+           "example": {
+            "title": "Learn how to use the forms",
+            "start": "08-00",
+            "end": "12-00",
+            "priority": "low",
+            "date": "2023-08-30T00:00:00.000Z"
         }
          }
        
