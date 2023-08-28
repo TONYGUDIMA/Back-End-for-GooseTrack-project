@@ -27,7 +27,7 @@ router.post("/own", reviewsAddSchema, addReview);
 
 router.get("/own", getOwnReview);
 
-router.put(
+router.patch(
   "/own",
   reviewsEditSchema,
   updateOwnReview
