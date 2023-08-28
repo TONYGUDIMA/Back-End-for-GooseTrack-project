@@ -1,4 +1,5 @@
 const { model, Schema } = require("mongoose");
+const handleMongooseError = require("../helpers/handleMongooseError");
 
 const reviewSchema = new Schema(
   {
@@ -23,13 +24,10 @@ const reviewSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
+reviewSchema.post("save", handleMongooseError);
 
 const Review = model("review", reviewSchema);
 
 module.exports = {
   Review,
 };
-
-
-
-
