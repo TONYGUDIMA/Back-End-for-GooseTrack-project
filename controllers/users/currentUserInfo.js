@@ -19,13 +19,3 @@ module.exports = async (req, res) => {
     birthday,
   });
 };
-
-// {
-//   "email": "user@example.com",
-//   "_id": "string",
-//   "avatarURL": "string",
-//   "phone": "string",
-//   "skype": "string",
-//   "name": "string",
-//   "birthday": "string"
-// }
