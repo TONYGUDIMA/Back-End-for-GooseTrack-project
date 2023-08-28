@@ -24,10 +24,12 @@ const reviewSchema = new Schema(
 );
 
 
-
-
 const Review = model("review", reviewSchema);
 
 module.exports = {
-  Review
+  Review,
 };
+
+
+
+
