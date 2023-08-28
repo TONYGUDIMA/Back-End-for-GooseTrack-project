@@ -21,12 +21,12 @@ router.get("/", getListReviews);
 
 router.use(authMiddlewares);
 
-router.get("/my-review/:id", isValidId, getReviewById);
+router.get("/own/:id", isValidId, getReviewById);
 
 router.post("/", reviewsAddSchema, addReview);
 
-router.put("/my-review/:id", isValidId, reviewsEditSchema, updateReview);
+router.put("/own/:id", isValidId, reviewsEditSchema, updateReview);
 
-router.delete("/my-review/:id", isValidId, removeReview);
+router.delete("/own/:id", isValidId, removeReview);
 
 module.exports = router;
