@@ -4,29 +4,35 @@ const router = express.Router();
 
 const {
   getListReviews,
-  getReviewById,
+  getOwnReview,
   addReview,
-  updateReview,
-  removeReview,
+  updateOwnReview,
+  removeOwnReview,
 } = require("../controllers");
 
-const { isValidId, authMiddlewares } = require("../middlewares");
+const {
+  isValidId,
+  authMiddlewares,
+} = require("../middlewares");
 const {
   reviewsAddSchema,
   reviewsEditSchema,
 } = require("../helpers/joiValidation/JoiReviewsValidation");
 
-
 router.get("/", getListReviews);
 
 router.use(authMiddlewares);
 
-router.get("/own/:id", isValidId, getReviewById);
+router.post("/own", reviewsAddSchema, addReview);
 
-router.post("/", reviewsAddSchema, addReview);
+router.get("/own", getOwnReview);
 
-router.put("/own/:id", isValidId, reviewsEditSchema, updateReview);
+router.put(
+  "/own",
+  reviewsEditSchema,
+  updateOwnReview
+);
 
-router.delete("/own/:id", isValidId, removeReview);
+router.delete("/own", removeOwnReview);
 
 module.exports = router;

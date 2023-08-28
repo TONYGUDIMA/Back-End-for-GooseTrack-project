@@ -7,18 +7,13 @@ const {
 } = require("../../helpers/AppError");
 
 module.exports = async (req, res) => {
-  const { id } = req.params;
-  const result = await Review.findByIdAndUpdate(
-    id,
-    req.body,
-    {
-      new: true,
-    }
-  );
+  const result = await Review.findOneAndRemove({
+    owner: req.user._id,
+  });
 
   if (!result) {
     throw AppError(404, "Not found");
   }
 
-  res.json(result);
+  res.json({ message: "Review deleted" });
 };

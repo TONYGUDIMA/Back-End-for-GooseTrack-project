@@ -7,22 +7,22 @@ const currentUserInfo = require("./users/currentUserInfo");
 const updateUserInfo = require("./users/updateUserInfo");
 
 const getListReviews = require("./reviews/getListReview");
-const getReviewById = require("./reviews/getReviewById");
+const getOwnReview = require("./reviews/getOwnReview");
 const addReview = require("./reviews/addReview");
-const updateReview = require("./reviews/updateReview");
-const removeReview = require("./reviews/removeReview");
+const updateOwnReview = require("./reviews/updateOwnReview");
+const removeOwnReview = require("./reviews/removeOwnReview");
 
 module.exports = {
-// Users
+  // Users
   userRegistration: ctrlWrapper(userRegistration),
   userLogin: ctrlWrapper(userLogin),
   userLogout: ctrlWrapper(userLogout),
   currentUserInfo: ctrlWrapper(currentUserInfo),
   updateUserInfo: ctrlWrapper(updateUserInfo),
-// Reviews
+  // Reviews
   getListReviews: ctrlWrapper(getListReviews),
-  getReviewById: ctrlWrapper(getReviewById),
+  getOwnReview: ctrlWrapper(getOwnReview),
   addReview: ctrlWrapper(addReview),
-  updateReview: ctrlWrapper(updateReview),
-  removeReview: ctrlWrapper(removeReview),
+  updateOwnReview: ctrlWrapper(updateOwnReview),
+  removeOwnReview: ctrlWrapper(removeOwnReview),
 };
