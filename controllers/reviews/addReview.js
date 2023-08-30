@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   const reviewExist = await Review.find({
     owner: req.user._id,
   });
-  console.log(reviewExist);
+  
   if (reviewExist.length > 0) {
     throw AppError(
       409,

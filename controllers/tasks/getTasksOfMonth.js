@@ -5,7 +5,6 @@ const {
 
 module.exports = async (req, res) => {
   const { month, year } = req.query;
-  console.log(month, year);
   const startOfMonth = new Date(
     year,
     month - 1,
@@ -20,7 +19,6 @@ module.exports = async (req, res) => {
     59,
     999
   ).toLocaleDateString("fr-CA");
-  console.log(startOfMonth, endOfMonth);
   const tasks = await Task.find({
     owner: req.user._id,
     date: {
