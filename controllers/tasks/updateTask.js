@@ -7,20 +7,16 @@ const {
 } = require("../../helpers/AppError");
 
 module.exports = async (req, res) => {
-  const { id } = req.params;
+   const { id } = req.params;
+  const { _id: owner } = req.user;
   const result = await Task.findOneAndUpdate(
-    {
-      id
-    },
-    req.body,
-    {
-      new: true,
-    }
-  );
+   { _id: id, owner }, req.body, {
+    new: true,
+  });
 
   if (!result) {
     throw AppError(404, "Not found");
   }
 
-  res.json({ updatedReview: result });
+  res.json(result );
 };
