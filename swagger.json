@@ -225,9 +225,12 @@
             "description": "Server error"
           }
         }
-      },
+      }
 
-     "post": {
+    
+    },
+    "/reviews/own": {
+       "post": {
         "tags": ["Reviews"],
         "summary": "Create a new review",
         "parameters": [],
@@ -264,9 +267,7 @@
             "description": "User already has a review"
           }
         }
-      }
-    },
-    "/reviews/my-review/{id}": {
+      },
       "get": {
         "tags": ["Reviews"],
         "summary": "Get review by user id",
@@ -299,7 +300,7 @@
           }
         }
       },
-        "put": {
+        "patch": {
         "tags": ["Reviews"],
         "summary": "Change and update review by user id",
         "parameters": [
@@ -374,7 +375,7 @@
         "summary": " Get all tasks in product",
         "parameters": [
           {
-            "name": "years",
+            "name": "year",
             "in": "query",
             "required": true,
             "type": "date",
@@ -559,10 +560,6 @@
           "user": {
             "type": "object",
             "properties": {
-              "id": {
-                "type": "string",
-                "description": "User's id"
-              },
               "name": {
                 "type": "string",
                 "description": "User's name"
@@ -571,18 +568,13 @@
                 "type": "string",
                 "description": "User's email",
                 "format": "email"
-              },
-              "avatarURL": {
-                "type": "string",
-                "description": "User's avatar path"
-              }}}},
+              }
+             }}},
         "example":{
           "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OTgzYjEzOWRkMDlmY2E5YWFhNmRhNCIsImlhdCI6MTY4NzY5ODE5NSwiZXhwIjoxNjg3Njk4Mzc1fQ.P3ZWu3PzRpMyuT6ngche4ojbYizBvnOOnTSqniABkhQ",
           "user": {
-            "_id": "64983b139dd09fca9aaa6da4",
             "name": "Adam",
-            "email": "adam@gmail.com",
-            "avatarURL": "http://www.gravatar.com/2a06849295a6965ddd313b186672c523.json"
+            "email": "adam@gmail.com"
           }
         }
       },
@@ -610,7 +602,7 @@
           "type": "object",
         "required": ["email", "password"],
         "properties": { 
-             "token": {
+            "token": {
             "type": "string",
             "description": "User's token"
           },
@@ -623,32 +615,11 @@
             "format": "email",
             "minLength": 3,
             "maxLength": 254
-          }  ,
-           "_id": {
-            "type": "string",
-            "description": "User's id"
-          },
-              "avatarURL": {
-                "type": "string",
-                "description": "User's avatar"
-              },
-              "phone":{
-                 "type": "string",
-                "description": "User's phone"
-              },
-              "skype":{
-                 "type": "string",
-                "description": "User's skype"
-              },
-              "name":{
-                "type": "string",
-                "description": "User's name "
             },
-              "birthday":{
-                "type": "string",
-                "description": "User's day of birthday"
-                }
-               
+              "name":{
+              "type": "string",
+              "description": "User's name "
+            } 
             }
           }
         }
@@ -789,36 +760,39 @@
               "type": "string",
               "description": "Review comment"
             },
-            "owner": {
-              "type": "object",
-              "description": "Review owner",
-              "properties": {
-                "_id": {
-                  "type": "string",
-                  "description": "Owner id"
-                },
-                "name": {
-                  "type": "string",
-                  "description": "Owner name"
-                },
-                "avatarURL": {
-                  "type": "string",
-                  "description": "Owner avatarURL"
-                }
-              }
+               "owner": {
+            "type": "object",
+            "properties":{
+           "_id": {
+            "type": "string",
+            "description": "User's id"
+          },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar"
+              },
+              "name":{
+                "type": "string",
+                "description": "User's name "
             }
-          }},
+         
+            }
+          },
+             "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" }
+            }
+          },
            "example": {
-            "_id": "64983b139dd09fca9aaa6da4",
-            "rating": 2,
-            "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
-          "owner":{
-            "_id": "64983b139dd09fca9aaa6da4",
-            "name": "Adam",
-            "avatarURL": "http://www.gravatar.com/2a06849295a6965ddd313b186672c523.json"
-          }
-        
-          
+             "_id": "64ecfc80204ef6ac26614d21",
+        "rating": 4,
+        "comment": "A pleasant find for me. It's exactly what I was looking for. The main advantage is the visual visualization in the form of boards and cards. I recommend it!",
+        "owner": {
+            "_id": "64ecef267ca62acf240e9c47",
+            "name": "Anton",
+            "avatarUrl": "https://www.gravatar.com/avatar/162835976f342a6ca91346c3a328de56?d=wavatar"
+        },
+        "createdAt": "2023-08-28T19:58:56.407Z",
+        "updatedAt": "2023-08-28T20:01:30.105Z"
         }
 
       },
@@ -837,36 +811,41 @@
               "type": "string",
               "description": "Review comment"
             },
-            "owner": {
-              "type": "object",
-              "description": "Review owner",
-              "properties": {
-                "_id": {
-                  "type": "string",
-                  "description": "Owner id"
-                },
-                "name": {
-                  "type": "string",
-                  "description": "Owner name"
-                },
-                "avatarURL": {
-                  "type": "string",
-                  "description": "Owner avatarURL"
-                }
-              }
+                 "owner": {
+            "type": "object",
+            "properties":{
+           "_id": {
+            "type": "string",
+            "description": "User's id"
+          },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar"
+              },
+              "name":{
+                "type": "string",
+                "description": "User's name "
+            }
+         
             }
           },
+             "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" }
+            
+          },
     
-       "example": {
-            "_id": "64983b139dd09fca9aaa6da4",
-            "rating": 2,
-            "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
-          "owner":{
-            "_id": "64983b139dd09fca9aaa6da4",
-            "name": "Adam",
-            "avatarURL": "http://www.gravatar.com/2a06849295a6965ddd313b186672c523.json"
-          }
-        } 
+          "example": {
+             "_id": "64ecfc80204ef6ac26614d21",
+        "rating": 4,
+        "comment": "A pleasant find for me. It's exactly what I was looking for. The main advantage is the visual visualization in the form of boards and cards. I recommend it!",
+        "owner": {
+            "_id": "64ecef267ca62acf240e9c47",
+            "name": "Anton",
+            "avatarUrl": "https://www.gravatar.com/avatar/162835976f342a6ca91346c3a328de56?d=wavatar"
+        },
+        "createdAt": "2023-08-28T19:58:56.407Z",
+        "updatedAt": "2023-08-28T20:01:30.105Z"
+        }
        },
         "CreateReviewRequest":{
           "type": "object",
@@ -899,35 +878,39 @@
               "type": "string",
               "description": "Review comment"
             },
-            "owner": {
-              "type": "object",
-              "description": "Review owner",
-              "properties": {
-                "_id": {
-                  "type": "string",
-                  "description": "Owner id"
-                },
-                "name": {
-                  "type": "string",
-                  "description": "Owner name"
-                },
-                "avatarURL": {
-                  "type": "string",
-                  "description": "Owner avatarURL"
-                }
-              }
+                "owner": {
+            "type": "object",
+            "properties":{
+           "_id": {
+            "type": "string",
+            "description": "User's id"
+          },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar"
+              },
+              "name":{
+                "type": "string",
+                "description": "User's name "
+            }
+         
             }
           },
-           "example": {
-            "_id": "64983b139dd09fca9aaa6da4",
-            "rating": 2,
-            "comment": "Really helps to plan the day and visualize tasks. Exactly what I was looking for. Huge thanks to the developers!",
-           "owner":{
-            "_id": "64983b139dd09fca9aaa6da4",
-            "name": "Adam",
-            "avatarURL": "http://www.gravatar.com/2a06849295a6965ddd313b186672c523.json"
-          }
-        } 
+             "createdAt": { "type": "string" },
+             "updatedAt": { "type": "string" }
+          },
+              "example": {
+             "_id": "64ecfc80204ef6ac26614d21",
+        "rating": 4,
+        "comment": "A pleasant find for me. It's exactly what I was looking for. The main advantage is the visual visualization in the form of boards and cards. I recommend it!",
+        "owner": {
+            "_id": "64ecef267ca62acf240e9c47",
+            "name": "Anton",
+            "avatarUrl": "https://www.gravatar.com/avatar/162835976f342a6ca91346c3a328de56?d=wavatar"
+        },
+        "createdAt": "2023-08-28T19:58:56.407Z",
+        "updatedAt": "2023-08-28T20:01:30.105Z"
+        }
          },
          "UpdateReviewRequest":{
            "type": "object",
@@ -949,6 +932,10 @@
           "UpdateReviewResponse":{
            "type": "object",
           "properties": {
+           "_id": {
+              "type": "string",
+              "description": "Review id"
+            },
             "rating": {
               "type": "number",
               "description": "Review rating"
@@ -956,8 +943,40 @@
             "comment": {
               "type": "string",
               "description": "Review comment"
+            },
+                 "owner": {
+            "type": "object",
+            "properties":{
+           "_id": {
+            "type": "string",
+            "description": "User's id"
+          },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar"
+              },
+              "name":{
+                "type": "string",
+                "description": "User's name "
             }
-          }
+         
+            }
+          },
+             "createdAt": { "type": "string" },
+             "updatedAt": { "type": "string" }
+          },
+             "example": {
+             "_id": "64ecfc80204ef6ac26614d21",
+        "rating": 4,
+        "comment": "A pleasant find for me. It's exactly what I was looking for. The main advantage is the visual visualization in the form of boards and cards. I recommend it!",
+        "owner": {
+            "_id": "64ecef267ca62acf240e9c47",
+            "name": "Anton",
+            "avatarUrl": "https://www.gravatar.com/avatar/162835976f342a6ca91346c3a328de56?d=wavatar"
+        },
+        "createdAt": "2023-08-28T19:58:56.407Z",
+        "updatedAt": "2023-08-28T20:01:30.105Z"
+        }
          },
          "AllTasksResponse":{
               "type": "array",
@@ -984,6 +1003,11 @@
               "type": "string",
               "description": "Priority  one of [low, medium, high]"
             },
+             "category": {
+             "type":  "string",
+             "description":   "Category One of [to-do, in-progress, done]"
+      
+             },
             "date": {
               "type": "Date",
               "description": "Date must be in YYYY-MM-DD format"
@@ -999,7 +1023,8 @@
             "start": "08-00",
             "end": "12-00",
             "priority": "low",
-            "date": "2023-06-30T00:00:00.000Z",
+            "category": "to-do",
+            "date": "2023-06-30",
             "owner": "64983b139dd09fca9aaa6da4"
         }
          },
@@ -1024,6 +1049,11 @@
               "type": "string",
               "description": "Priority  one of [low, medium, high]"
             },
+              "category": {
+             "type":  "string",
+             "description":   "Category One of [to-do, in-progress, done]"
+      
+             },
             "date": {
               "type": "Date",
               "description": "Date must be in YYYY-MM-DD format"
@@ -1034,7 +1064,8 @@
             "start": "08-00",
             "end": "12-00",
             "priority": "low",
-            "date": "2023-08-30T00:00:00.000Z"
+            "category": "to-do",
+            "date": "2023-08-30"
         }
          },
           "CreateTaskResponse":{
@@ -1058,6 +1089,11 @@
               "type": "string",
               "description": "Priority  one of [low, medium, high]"
             },
+              "category": {
+             "type":  "string",
+             "description":   "Category One of [to-do, in-progress, done]"
+      
+             },
             "date": {
               "type": "Date",
               "description": "Date must be in YYYY-MM-DD format"
@@ -1068,7 +1104,8 @@
             "start": "08-00",
             "end": "11-00",
             "priority": "low",
-            "date": "2023-08-30T00:00:00.000Z"
+             "category": "to-do",
+            "date": "2023-08-30"
         }
          },
          "UpdateTaskRequest":{
@@ -1091,6 +1128,11 @@
               "type": "string",
               "description": "Priority  one of [low, medium, high]"
             },
+              "category": {
+             "type":  "string",
+             "description":   "Category One of [to-do, in-progress, done]"
+      
+             },
             "date": {
               "type": "Date",
               "description": "Date must be in YYYY-MM-DD format"
@@ -1101,7 +1143,8 @@
             "start": "08-00",
             "end": "12-00",
             "priority": "low",
-            "date": "2023-08-30T00:00:00.000Z"
+             "category": "to-do",
+            "date": "2023-08-30"
         }
          },
          "UpdateTaskResponse":{
@@ -1124,6 +1167,11 @@
               "type": "string",
               "description": "Priority one of [low, medium, high]"
             },
+              "category": {
+             "type":  "string",
+             "description":   "Category One of [to-do, in-progress, done]"
+      
+             },
             "date": {
               "type": "Date",
               "description": "Date must be in YYYY-MM-DD format"
@@ -1134,7 +1182,8 @@
             "start": "08-00",
             "end": "12-00",
             "priority": "low",
-            "date": "2023-08-30T00:00:00.000Z"
+            "category": "to-do",
+            "date": "2023-08-30"
         }
          }
        
