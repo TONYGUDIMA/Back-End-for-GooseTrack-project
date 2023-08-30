@@ -1,14 +1,9 @@
-
-const authMiddlewares = require('./authMiddlewares');
-const uploadAvatar = require('./uploadAvatar');
-const validateBody = require('./validateBody');
-const isValidId = require('./isValidId')
+const authMiddlewares = require("./authMiddlewares");
+const uploadAvatar = require("./uploadAvatar");
+const validateBody = require("./validateBody");
 
 module.exports = {
-    authMiddlewares,
-    uploadAvatar,
-    validateBody,
-    isValidId
-
-}
-
+  authMiddlewares,
+  uploadAvatar,
+  validateBody,
+};

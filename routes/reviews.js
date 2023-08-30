@@ -11,7 +11,6 @@ const {
 } = require("../controllers");
 
 const {
-  isValidId,
   authMiddlewares,
 } = require("../middlewares");
 const {
