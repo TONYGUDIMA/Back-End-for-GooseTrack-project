@@ -1,7 +1,6 @@
 const express = require("express");
 const router = new express.Router();
 const {
-  userLogout,
   currentUserInfo,
   updateUserInfo,
 } = require("../controllers");
@@ -13,7 +12,6 @@ const {
 
 router.use(authMiddlewares);
 
-router.post("/logout", userLogout);
 
 router.get("/current", currentUserInfo);
 
