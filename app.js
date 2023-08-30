@@ -8,6 +8,7 @@ const swaggerDocument = require("./swagger.json");
 const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
 const reviewRouter = require("./routes/reviews");
+const taskRouter = require("./routes/tasks")
 
 const app = express();
 
@@ -32,7 +33,7 @@ mongoose
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/reviews", reviewRouter);
-
+app.use("/tasks", taskRouter);
 // ===========================================================================
 app.use(logger(formatsLogger));
 app.use(cors());
