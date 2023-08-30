@@ -22,6 +22,7 @@ module.exports = async (req, res) => {
   ).toLocaleDateString("fr-CA");
   console.log(startOfMonth, endOfMonth);
   const tasks = await Task.find({
+    owner: req.user._id,
     date: {
       $gte: startOfMonth,
       $lte: endOfMonth,
