@@ -108,9 +108,9 @@
         }
       }
     },
-     "/users/logout": {
+     "/auth/logout": {
       "post": {
-        "tags": ["User"],
+        "tags": ["Auth"],
         "summary": "Logout",
         "security": [{ "Bearer": [] }],
         "parameters": [],
