@@ -1,10 +1,11 @@
 
-const Task = require("../../models/taskModel");
+const {Task} = require("../../models/taskModel");
 
 
 module.exports = async (req, res) => {
-    const { _id } = req.params;
-    const result = await Task.findByIdAndDelete(_id);
+    const { id } = req.params;
+   
+    const result = await Task.findByIdAndDelete(id);
     if(!result) {
         throw HttpError(404, "Not found")
     }

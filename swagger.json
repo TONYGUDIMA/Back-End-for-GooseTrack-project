@@ -271,15 +271,7 @@
       "get": {
         "tags": ["Reviews"],
         "summary": "Get review by user id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "example": "64983b139dd09fca9aaa6da4"
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
@@ -303,15 +295,7 @@
         "patch": {
         "tags": ["Reviews"],
         "summary": "Change and update review by user id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "user's id"
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
           "requestBody": {
           "description": "Review's object",
@@ -346,15 +330,7 @@
       "delete": {
         "tags": ["Reviews"],
         "summary": "Delete review by user id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "user's id"
-          }
-        ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "responses": {
           "204": {
@@ -369,24 +345,24 @@
         }
     }
     },
-     "/tasks":{ 
+     "/tasks/query":{ 
         "get": {
         "tags": ["Tasks"],
         "summary": " Get all tasks in product",
-        "parameters": [
+         "parameters": [
           {
             "name": "year",
             "in": "query",
             "required": true,
-            "type": "date",
+            "type": "string",
             "example": "2023"
           },
           {
             "name": "month",
             "in": "query",
             "required": true,
-            "type": "date",
-            "example": "08"
+            "type": "string",
+            "example": "8"
           }
         ],
         "security": [{ "Bearer": [] }],
@@ -408,8 +384,8 @@
             "description": "Server error"
           }
         }
-      },
-
+      }},
+"/tasks":{
      "post": {
         "tags": ["Tasks"],
         "summary": "Create a new task",
@@ -424,7 +400,7 @@
                 "$ref": "#/components/schemas/CreateTaskRequest"
               }
             }
-          }
+          
         },
         "responses": {
           "200": {
@@ -449,7 +425,7 @@
           }
         }
       }
-    },
+    }},
     "/tasks/{id}": {
       "patch": {
         "tags": ["Tasks"],
@@ -461,6 +437,7 @@
             "required": true,
             "type": "string",
             "example": "64983b139dd09fca9aaa6da4"
+            
           }
         ],
         "security": [{ "Bearer": [] }],
@@ -497,15 +474,11 @@
       "delete": {
         "tags": ["Tasks"],
         "summary": "Delete task by user's id",
-        "parameters": [
-          {
-            "name": "id",
+        "parameters": [{"name": "id",
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "user's id"
-          }
-        ],
+            "example": "64983b139dd09fca9aaa6da4"}],
         "security": [{ "Bearer": [] }],
         "responses": {
           "204": {
@@ -812,37 +785,20 @@
               "description": "Review comment"
             },
                  "owner": {
-            "type": "object",
-            "properties":{
-           "_id": {
             "type": "string",
             "description": "User's id"
           },
-              "avatarURL": {
-                "type": "string",
-                "description": "User's avatar"
-              },
-              "name":{
-                "type": "string",
-                "description": "User's name "
-            }
-         
-            }
-          },
+        
              "createdAt": { "type": "string" },
             "updatedAt": { "type": "string" }
-            
+          
           },
     
           "example": {
              "_id": "64ecfc80204ef6ac26614d21",
         "rating": 4,
         "comment": "A pleasant find for me. It's exactly what I was looking for. The main advantage is the visual visualization in the form of boards and cards. I recommend it!",
-        "owner": {
-            "_id": "64ecef267ca62acf240e9c47",
-            "name": "Anton",
-            "avatarUrl": "https://www.gravatar.com/avatar/162835976f342a6ca91346c3a328de56?d=wavatar"
-        },
+        "owner": "64ecef267ca62acf240e9c47",
         "createdAt": "2023-08-28T19:58:56.407Z",
         "updatedAt": "2023-08-28T20:01:30.105Z"
         }
@@ -927,8 +883,7 @@
               "description": "Review comment",
               "example": "New review"
             }
-          }
-         },
+         }},
           "UpdateReviewResponse":{
            "type": "object",
           "properties": {
@@ -945,23 +900,9 @@
               "description": "Review comment"
             },
                  "owner": {
-            "type": "object",
-            "properties":{
-           "_id": {
-            "type": "string",
-            "description": "User's id"
-          },
-              "avatarURL": {
-                "type": "string",
-                "description": "User's avatar"
-              },
-              "name":{
-                "type": "string",
-                "description": "User's name "
-            }
-         
-            }
-          },
+                  "type": "string",
+                  "description": "Owner id"
+                 },
              "createdAt": { "type": "string" },
              "updatedAt": { "type": "string" }
           },
@@ -969,19 +910,13 @@
              "_id": "64ecfc80204ef6ac26614d21",
         "rating": 4,
         "comment": "A pleasant find for me. It's exactly what I was looking for. The main advantage is the visual visualization in the form of boards and cards. I recommend it!",
-        "owner": {
-            "_id": "64ecef267ca62acf240e9c47",
-            "name": "Anton",
-            "avatarUrl": "https://www.gravatar.com/avatar/162835976f342a6ca91346c3a328de56?d=wavatar"
-        },
+        "owner":  "64ecef267ca62acf240e9c47",
         "createdAt": "2023-08-28T19:58:56.407Z",
         "updatedAt": "2023-08-28T20:01:30.105Z"
         }
          },
          "AllTasksResponse":{
-              "type": "array",
-        "items": {
-          "type": "object",
+              "type": "object",
           "properties": {
             "_id": {
               "type": "string",
@@ -1009,23 +944,27 @@
       
              },
             "date": {
-              "type": "Date",
+              "type": "string",
               "description": "Date must be in YYYY-MM-DD format"
             },
             "owner": {
               "type": "object",
               "description": "Task owner id"  
-            }
-          }},
+            },
+             "createdAt": "2023-08-28T19:58:56.407Z",
+        "updatedAt": "2023-08-28T20:01:30.105Z"
+          },
            "example": {
             "_id": "64983b139dd09fca9aaa6da4",
             "title": "Learn how to use the forms",
-            "start": "08-00",
-            "end": "12-00",
+            "start": "08:00",
+            "end": "12:00",
             "priority": "low",
             "category": "to-do",
             "date": "2023-06-30",
-            "owner": "64983b139dd09fca9aaa6da4"
+            "owner": "64983b139dd09fca9aaa6da4",
+             "createdAt": "2023-08-28T19:58:56.407Z",
+        "updatedAt": "2023-08-28T20:01:30.105Z"
         }
          },
          "CreateTaskRequest":{
@@ -1055,7 +994,7 @@
       
              },
             "date": {
-              "type": "Date",
+              "type": "string",
               "description": "Date must be in YYYY-MM-DD format"
             }
           },
@@ -1095,14 +1034,14 @@
       
              },
             "date": {
-              "type": "Date",
+              "type": "string",
               "description": "Date must be in YYYY-MM-DD format"
             }
           },
            "example": {
             "title": "Learn how to use the forms",
-            "start": "08-00",
-            "end": "11-00",
+            "start": "08:00",
+            "end": "11:00",
             "priority": "low",
              "category": "to-do",
             "date": "2023-08-30"
@@ -1134,14 +1073,14 @@
       
              },
             "date": {
-              "type": "Date",
+              "type": "string",
               "description": "Date must be in YYYY-MM-DD format"
             }
           },
            "example": {
             "title": "Learn how to use the forms",
-            "start": "08-00",
-            "end": "12-00",
+            "start": "08:00",
+            "end": "12:00",
             "priority": "low",
              "category": "to-do",
             "date": "2023-08-30"
@@ -1173,20 +1112,20 @@
       
              },
             "date": {
-              "type": "Date",
+              "type": "string",
               "description": "Date must be in YYYY-MM-DD format"
             }
           },
            "example": {
             "title": "Learn how to use the forms",
-            "start": "08-00",
-            "end": "12-00",
+            "start": "08:00",
+            "end": "12:00",
             "priority": "low",
             "category": "to-do",
             "date": "2023-08-30"
         }
          }
-       
+    
     },
     "securitySchemes": {
       "Bearer": {
@@ -1195,5 +1134,5 @@
         "bearerFormat": "JWT"
       }
     }
+    }
   }
-}
