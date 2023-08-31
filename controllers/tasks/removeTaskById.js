@@ -1,4 +1,5 @@
 
+const AppError = require("../../helpers/AppError");
 const {Task} = require("../../models/taskModel");
 
 
@@ -7,7 +8,7 @@ module.exports = async (req, res) => {
    
     const result = await Task.findByIdAndDelete(id);
     if(!result) {
-        throw HttpError(404, "Not found")
+        throw AppError(404, "Not found")
     }
 
     res.json({
