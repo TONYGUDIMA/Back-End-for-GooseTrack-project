@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   const { month, year } = req.query;
   const startOfMonth = new Date(
     year,
-    month - 1,
+    month,
     1
   ).toLocaleDateString("fr-CA");
   const endOfMonth = new Date(
