@@ -171,12 +171,22 @@
          "requestBody": {
           "description": "Update user object",
           "content": {
-            "multipart/form-data":{
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateUserRequest"
               }
             }
-            
           }
         },
         "responses": {
@@ -643,12 +653,7 @@
             "format": "email",
             "minLength": 3,
             "maxLength": 254
-          }  ,
-              "avatarURL": {
-                "type": "string",
-                "description": "User's avatar",
-                 "format": "binary"
-              },
+          },
               "phone":{
                  "type": "string",
                 "description": "User's phone"
@@ -1002,7 +1007,7 @@
            "example": {
             "title": "Learn how to use the forms",
             "start": "08:00",
-            "end": "12::00",
+            "end": "12:00",
             "priority": "low",
             "category": "to-do",
             "date": "2023-08-30"
