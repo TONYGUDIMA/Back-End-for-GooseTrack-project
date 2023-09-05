@@ -171,11 +171,12 @@
          "requestBody": {
           "description": "Update user object",
           "content": {
-            "application/json": {
+            "multipart/form-data":{
               "schema": {
                 "$ref": "#/components/schemas/UpdateUserRequest"
               }
             }
+            
           }
         },
         "responses": {
@@ -401,7 +402,7 @@
               }
             }
           
-        },
+        }},
         "responses": {
           "200": {
             "description": "ОК - Task was successfully created",
@@ -412,11 +413,10 @@
                 }
               }
             }
-          },
+        },
              "400": {
-            "description": "Bad request (invalid request body) / No token provided",
-            "content": {}
-          },
+            "description": "Bad request (invalid request body) / No token provided"
+            },
           "401": {
             "description": "Not authorized"
           },
@@ -424,7 +424,7 @@
             "description": "Bad request(invalid request body)"
           }
         }
-      }
+      
     }},
     "/tasks/{id}": {
       "patch": {
@@ -646,7 +646,8 @@
           }  ,
               "avatarURL": {
                 "type": "string",
-                "description": "User's avatar"
+                "description": "User's avatar",
+                 "format": "binary"
               },
               "phone":{
                  "type": "string",
@@ -717,7 +718,7 @@
         }
       },
       "AllReviewsResponse":{
-         "type": "array",
+         "type": "object",
         "items": {
           "type": "object",
           "properties": {
@@ -755,7 +756,7 @@
             "updatedAt": { "type": "string" }
             }
           },
-           "example": {
+           "example": [{
              "_id": "64ecfc80204ef6ac26614d21",
         "rating": 4,
         "comment": "A pleasant find for me. It's exactly what I was looking for. The main advantage is the visual visualization in the form of boards and cards. I recommend it!",
@@ -766,7 +767,7 @@
         },
         "createdAt": "2023-08-28T19:58:56.407Z",
         "updatedAt": "2023-08-28T20:01:30.105Z"
-        }
+        }]
 
       },
       "ReviewsByIdUserResponse":{
@@ -1000,15 +1001,14 @@
           },
            "example": {
             "title": "Learn how to use the forms",
-            "start": "08-00",
-            "end": "12-00",
+            "start": "08:00",
+            "end": "12::00",
             "priority": "low",
             "category": "to-do",
             "date": "2023-08-30"
         }
          },
           "CreateTaskResponse":{
-          
           "type": "object",
           "description": "User new task",
           "properties": {
