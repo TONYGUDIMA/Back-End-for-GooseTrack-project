@@ -26,7 +26,7 @@ const taskSchema = new Schema(
         validator: function (value) {
           return value >= this.start;
         },
-        message: 'Your message',
+        message: 'Not valid time. It is expected that the end will be longer from the start',
       },
 
     },
