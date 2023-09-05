@@ -2,7 +2,7 @@ const { model, Schema } = require("mongoose");
 const handleMongooseError = require("../helpers/handleMongooseError");
 
 const timeRegexp =
-  /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+/^([01]\d|2[0-3]):[0-5]\d$/;
 
 const taskSchema = new Schema(
   {
@@ -16,13 +16,19 @@ const taskSchema = new Schema(
       type: String,
       match: timeRegexp,
       required: true,
-      default: "09:00",
+     
     },
     end: {
       type: String,
       match: timeRegexp,
       required: true,
-      default: "09:30",
+      validate: {
+        validator: function (value) {
+          return value >= this.start;
+        },
+        message: 'Your message',
+      },
+
     },
     date: String,
     priority: {
